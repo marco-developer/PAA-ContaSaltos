@@ -7,18 +7,18 @@ CC = gcc
 #  -03 gcc version
 CFLAGS  = -g -Wall -O3
 
-default: hops
+default: main
 
 ldde.o: ldde.c
 	$(CC) $(CFLAGS) -c ldde.c -o ldde.o
 
-hops: hops.c ldde.o
-	$(CC) $(CFLAGS) hops.c ldde.o -o hops
+main: main.c ldde.o
+	$(CC) $(CFLAGS) main.c ldde.o -o main
 
-run: clean hops
-	./hops
+run: clean main
+	./main
 
 clean:
-	rm -f hops *.o core a.out *.*~ Makefile~
+	rm -f main *.o core a.out *.*~ Makefile~
 
-all: hops
+all: main

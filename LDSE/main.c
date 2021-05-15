@@ -1,61 +1,34 @@
-#include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "lista_publico.h"
 
-int main(void)
-{
-    int resultado, resultado2;    
+int main (void) {
     
-    //criar lista
-    pLista lista = criarLista(sizeof(int *), &resultado);
-   
-    
-    // TESTE INT
-
+    int resultado, saltosIn = 0, saltosRem = 0;
     int* valorInserido = malloc(sizeof(int*));
     int* valorRemovido = malloc(sizeof(int*));
-    int* valorBuscado = malloc(sizeof(int*));    
+    // int* valorBuscado = malloc(sizeof(int*));   
 
-    // insercao
-    int valor = 1;
-    int valor2 = 2;
-    int valor3 = 3;
-    int valor4 = 4;
-
-    inserirInicio(lista, &valor, valorInserido, &resultado);
-    printf("Valor inserido: %d \n", *valorInserido);  
-   
-    inserirInicio(lista, &valor2, valorInserido, &resultado);
-    printf("Valor inserido: %d \n", *valorInserido);  
+    //criar lista
+    pLista lista = criarLista(sizeof(int *), &resultado);
     
-    inserirFim(lista, &valor3, valorInserido, &resultado);
-    printf("Valor inserido: %d \n", *valorInserido);   
-   
-    inserirPos(lista, &valor4, valorInserido, 2, &resultado);
-    printf("Valor inserido: %d \n", *valorInserido);    
-
-    printf("\n------------------------------------\n");
-
-    valorBuscado = buscarInicio(lista, &resultado);
-    printf("Valor buscado: %d \n", *valorBuscado);
-
-    valorBuscado = buscarFim(lista, &resultado);
-    printf("Valor buscado: %d \n", *valorBuscado);
-
-    valorBuscado = buscarPos(lista,1, &resultado);
-    printf("Valor buscado: %d \n", *valorBuscado);
-
-    printf("\n------------------------------------\n");
-
-    removerInicio(lista, valorRemovido, &resultado2);
-    printf("Valor removido: %d \n", *valorRemovido);
-
-    removerFim(lista, valorRemovido, &resultado2);
-    printf("Valor removido: %d \n", *valorRemovido); 
-   
-    removerPos(lista, valorRemovido, 1, &resultado2);
-    printf("Valor removido: %d \n", *valorRemovido);     
+    for(int i=0;i<10000;i++) {
+        printf("Inserindo elemento %d\n", i);
+        // inserirFim(lista, &i, valorInserido, &resultado, &saltosIn);
+        inserirPos(lista, &i, valorInserido, i, &resultado, &saltosIn);
+        printf("Valor inserido: %d \n\n", *valorInserido);
+    }
+    
+    printf("\nRemovendo elementos...\n");
+    for(int i=2999;i>=0;i--) {
+        // valorBuscado = buscarPos(lista, i, &resultado);
+        printf("Removendo elemento armazenado na posicao %d. \n", i);
+        removerPos(lista, valorRemovido, i, &resultado, &saltosRem);
+    }
+    
+    printf("\n=-=-=-=\n");
+    printf("Total de saltos Insercao: %d\n", saltosIn);
+    printf("Total de saltos Remocao : %d\n", saltosRem);
 
     // destruir lista
     destruirLista(lista, &resultado);
@@ -63,59 +36,4 @@ int main(void)
         printf("Lista destruída!\n");
     }
 
-    /*
-    //TESTE CHAR
-
-    char* valorInserido = malloc(sizeof(char*));
-    char* valorRemovido = malloc(sizeof(char*));
-    char* valorBuscado = malloc(sizeof(char*)); 
-
-    char nomea[] = "Fulano";
-    inserirFim(lista,nomea , valorInserido, &resultado);
-    printf("Valor inserido: %s \n", valorInserido);  
-    
-    char nomeb[] = "kkk";
-    inserirFim(lista,nomeb , valorInserido, &resultado);
-    printf("Valor inserido: %s \n", valorInserido); 
-   
-    char nomec[] = "aaaaa";
-    inserirPos(lista, nomec , valorInserido, 0, &resultado);
-    printf("Valor inserido: %s \n", valorInserido);  
-
-    imprimir(lista);   
-
-    printf("\n------------------------------------\n");
-
-    valorBuscado = buscarInicio(lista, &resultado);
-    printf("Valor buscado: %s \n", valorBuscado);
-
-    valorBuscado = buscarFim(lista, &resultado);
-    printf("Valor buscado: %s \n", valorBuscado);
-
-    valorBuscado = buscarPos(lista,1, &resultado);
-    printf("Valor buscado: %s \n", valorBuscado);
-
-    printf("\n------------------------------------\n");
-
-    imprimir(lista);   
-    removerInicio(lista, valorRemovido, &resultado2);
-    printf("Valor removido: %s \n", valorRemovido);
-
-    removerFim(lista, valorRemovido, &resultado2);
-    printf("Valor removido: %s \n", valorRemovido); 
-
-    imprimir(lista);   
-   
-    removerPos(lista, valorRemovido, 0, &resultado2);
-    printf("Valor removido: %s \n", valorRemovido);     
-
-    // destruir lista
-    destruirLista(lista, &resultado);
-    if(resultado == 0) {
-        printf("\nLista destruída!\n");
-    }
-    */
-    
-
-    return 0;
 }

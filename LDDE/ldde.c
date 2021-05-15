@@ -53,18 +53,18 @@ int DestruirLista(pldde *lista){
 }
 
 /* Fun��o wrapper para inser��o no in�cio utilizando a InserirPos */
-int InserirInicio(pldde lista, void * elemento){
-    return InserirPos(lista, elemento, 0);
+int InserirInicio(pldde lista, void * elemento, int *saltos){
+    return InserirPos(lista, elemento, 0, saltos);
 }
 
 /* Fun��o wrapper para inser��o no final utilizando a InserirPos */
-int InserirFim(pldde lista, void * elemento){
-    return InserirPos(lista, elemento, lista->quantidade_nos);
+int InserirFim(pldde lista, void * elemento, int *saltos){
+    return InserirPos(lista, elemento, lista->quantidade_nos, saltos);
 }
 
-int InserirPos(pldde lista, void * elemento, int posicao){
+int InserirPos(pldde lista, void * elemento, int posicao, int *saltos){
     int i = 0;
-    noLdde * atual = NULL;
+    noLdde * atual = (noLdde *) malloc(sizeof(noLdde));
     
     /* Se a posi��o informada for maior que a quantidade de n�s, retorna erro */
     if(posicao > lista->quantidade_nos){
@@ -81,7 +81,7 @@ int InserirPos(pldde lista, void * elemento, int posicao){
 
     /* Inicializa os ponteiros do novo n� */
     novo_no->prox = novo_no->ant = NULL;
-
+    
     /* Aloca o espa�o para os dados e verifica sucesso */ 
     novo_no->dados = (void *) malloc(lista->tamanho_dados);
     if(novo_no->dados == NULL){
@@ -90,12 +90,14 @@ int InserirPos(pldde lista, void * elemento, int posicao){
     }
 
     /* Copia o novo elemento para o n� */
+    
     memcpy(novo_no->dados, elemento, lista->tamanho_dados);
 
     /* Percorre a lista para encontrar o elemento na posi��o especificada */
     atual = lista->inicio; 
     for(i = 0; i < posicao; i++){
         atual = atual->prox;
+        *saltos = *saltos + 1;
     }
 
     /* Caso o valor do n� seja nulo, ent�o a inser��o deve ser no final ou n�o h� elementos na lista */
@@ -103,14 +105,15 @@ int InserirPos(pldde lista, void * elemento, int posicao){
         /* Atualiza os ponteiros de acordo com o caso espec�fico */
         if(posicao == 0){
             lista->inicio = lista->fim = novo_no;
-            i = 1;
         }else{
             novo_no->ant = lista->fim;
             lista->fim->prox = novo_no;
             lista->fim = novo_no;
         }
+        *saltos = *saltos + 1;
         lista->quantidade_nos++;
-        return i;
+
+        return SUCESSO;
     }
 
     /* Atualiza os ponteiros caso a inser��o seja de fato no meio da lista */
@@ -158,20 +161,19 @@ void * BuscarPos(pldde lista, int posicao){
 }
 
 /* Fun��o wrapper para remover do in�cio utilizando a RemoverPos */
-int RemoverInicio(pldde lista){
-    return RemoverPos(lista, 0);
+int RemoverInicio(pldde lista,int *saltos){
+    return RemoverPos(lista, 0, saltos);
 }
 
 /* Fun��o wrapper para remover do fim utilizando a RemoverPos */
-int RemoverFim(pldde lista){
-    return RemoverPos(lista, lista->quantidade_nos - 1);
+int RemoverFim(pldde lista, int *saltos){
+    return RemoverPos(lista, lista->quantidade_nos - 1, saltos);
 }
 
-int RemoverPos(pldde lista, int posicao){
+int RemoverPos(pldde lista, int posicao, int *saltos){
     int i = 0;
     noLdde * atual = NULL;
-    int saltos = 1;
-
+    
     /* Caso a posi��o informada seja maior ou igual � quantidade de n�s, retorna erro */
     if(posicao >= lista->quantidade_nos){
         printf("Erro: Posi��o inexistente!\n");
@@ -183,7 +185,7 @@ int RemoverPos(pldde lista, int posicao){
     atual = lista->inicio; 
     for(i = 0; i < posicao; i++){
         atual = atual->prox;
-        saltos++;
+        *saltos = *saltos + 1;
     }
 
     /* Atualiza os ponteiros de acordo com o caso espec�fico (in�cio, fim ou meio) */
@@ -208,5 +210,5 @@ int RemoverPos(pldde lista, int posicao){
     }
 
     lista->quantidade_nos--;
-    return saltos;
+    return SUCESSO;
 }
