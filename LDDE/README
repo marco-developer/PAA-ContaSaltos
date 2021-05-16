@@ -3,7 +3,7 @@ Para a realização da atividade de análise do nro de saltos, foi desenvolvido 
   - Faz a inserção de 10000 elementos, contando o nro de saltos;
   - Faz a remoção de 3000 elementos, contando o nro de saltos;
 
-Para compilar, usar o make. Foi mantido o main.c anterior, para fins de consulta.
+Para compilar, usar o make.
 
 # Anterior
 Este TDA define a interface para uma Lista dinâmica duplamente encadeada genérica homogênea.
