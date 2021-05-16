@@ -11,28 +11,30 @@ int i = 0;
 lista_t *listaNumeros = NULL;
 listaNumeros = CriarLista(sizeof(int), 10000, &Resultado);
 
- printf("Inserindo elementos no final da lista\n");
-    for(i = 1; i<=10000; i++) {
+//Necessário inserir um elementos na lista para satisfazer uma das validações do "InserePos"
+InserirInicio(listaNumeros, (int)100, &Resultado);
+
+ printf("Inserindo elementos em uma posicao da lista\n");
+    for(i = 0; i<=10000; i++) {
         int *k = (int*)malloc(sizeof(int));
         *k = i;
-        InserirFim(listaNumeros, *k, &Resultado);  //Jeito correto de enviar e receber os dados
-        //printf("Numero inserido no final da lista: %d\n",(int)BuscarFim(listaNumeros, &Resultado));
+        InserirPos(listaNumeros, *k, i, &Resultado);  //Jeito correto de enviar e receber os dados
+        //printf("Numero inserido na posicao %d da lista: %d\n",i, (int)BuscarPos(listaNumeros, i, &Resultado));
     }
-      printf("Numero de saltos ao INSERIR no final foi de: %d\n", numero_saltos_insere());
 
     printf("\n\n");
 
-
 int aux = 0;
-printf("\nRemovendo elementos no final da lista\n");
+printf("\nRemovendo elementos em uma posicao da lista\n");
     for (aux=3000; aux>0; aux--) {
         void* dado;
-        dado = RemoverFim(listaNumeros, &Resultado);
-       // printf("Elemento removido do fim da lista: %d\n",(int)dado);
+        dado = RemoverPos(listaNumeros, aux, &Resultado);
+        printf("Elemento removido da posicao %d: %d\n",aux, (int)dado);
         }
-        printf("Numero de saltos ao REMOVER no final foi de: %d\n", numero_saltos_remove());
 
-    printf("\n## Destruindo a lista ##\n\n");
-    DestruirLista(listaNumeros, &Resultado);
-      
+    printf("\n");
+
+    printf("Numero de saltos ao INSERIR em uma posicao foi de: %d\n", numero_saltos_insere());
+    printf("Numero de saltos ao REMOVER em uma posicao foi de: %d\n", numero_saltos_remove());
+  
 }

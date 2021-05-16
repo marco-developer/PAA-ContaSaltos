@@ -84,7 +84,6 @@ void InserirFim (struct Lista * lista, void * elemento, int * resultado)
         lista->fim->prox = NULL;                // Garante que o fim da lista acaba no fim
         lista->tamanho_atual = lista->tamanho_atual + 1;
         *resultado = SUCESSO;
-        saltos_insere++;
         return;
     } else {
         no_t * ultimo_no = lista->fim;  // no temporario com o ultimo elemento
@@ -92,7 +91,6 @@ void InserirFim (struct Lista * lista, void * elemento, int * resultado)
         lista->fim = novo_no;           // aponta o fim da lista para o novo no temporario
         lista->tamanho_atual = lista->tamanho_atual + 1;
         *resultado = SUCESSO;
-         saltos_insere++;
         return;
     } 
     return;
@@ -125,7 +123,8 @@ void InserirPos (struct Lista * lista, void * elemento, int Pos, int * resultado
     if (Pos == 0){
         novo_no->dados = elemento;         // Armazena o dado atual
         novo_no->prox = lista->inicio;     // Desloca um no na lista
-        lista->inicio = novo_no;           // Coloca o novo_no na lista
+        lista->inicio = novo_no;         // Coloca o novo_no na lista
+        saltos_insere++; //MARCOS
         lista->tamanho_atual = lista->tamanho_atual + 1;
         *resultado = SUCESSO;
         return;
@@ -134,6 +133,7 @@ void InserirPos (struct Lista * lista, void * elemento, int Pos, int * resultado
         for (i=0; i<Pos; i++){
             if (no_atual->prox != 0){
                 novo_no = no_atual;  
+                saltos_insere++; //MARCOS
                 no_atual = novo_no->prox;     //Desloca um no na lista
             } else { // Se a posicao desejada e maior que numero de elementos na lista, adiciona ao fim da lista
                 novo_no->dados = elemento;    // Adiciona o dado ao novo_no
@@ -141,6 +141,7 @@ void InserirPos (struct Lista * lista, void * elemento, int Pos, int * resultado
 
                 // Como e o ultimo elemento, atualiza o fim da lista
                 lista->fim = novo_no;
+                saltos_insere++; //MARCOS
 
                 *resultado = FRACASSO;
                 return;
@@ -154,9 +155,11 @@ void InserirPos (struct Lista * lista, void * elemento, int Pos, int * resultado
 
         // Faz uma nova busca pela lista para atualizar os nos
         no_atual = lista->inicio;
+        saltos_insere++; //MARCOS
         for (i=0; i<Pos; i++){
             if (no_atual->prox != novo_no->prox){
                 no_atual = no_atual->prox;
+                saltos_insere++; //MARCOS
             } else {break;}  // Se encontrado o no, sai do for
         }
         // Apos reencontrar o no, atualiza a lista
@@ -244,7 +247,6 @@ void * RemoverFim(struct Lista * lista, int * resultado)
         lista->inicio = NULL;       // Tambem anula o primeiro elemento da lista
         lista->tamanho_atual = lista->tamanho_atual - 1;
         *resultado = SUCESSO;
-        saltos_remove++;
         return elem_removido;
     }
     // Verifica se foi encontrado
@@ -252,7 +254,6 @@ void * RemoverFim(struct Lista * lista, int * resultado)
         lista->fim = penultimo_no;      // Iguala o fim da lista ao penultimo no
         lista->fim->prox = NULL;        // Garante que a lista acaba no fim
         lista->tamanho_atual = lista->tamanho_atual - 1;
-        saltos_remove++;
         *resultado = SUCESSO;
         return elem_removido;
     }
@@ -280,6 +281,7 @@ void * RemoverPos(struct Lista * lista, int Pos, int * resultado)
         Dado = lista->inicio->dados;        // Armazena a informacao que esta no inicio para retorna-la
         no_atual = lista->inicio->prox;     // Armazena o prox no no_atual
         lista->inicio = no_atual;           // Remove o no de inicio da lista
+        saltos_remove++; //MARCOS
         lista->tamanho_atual = lista->tamanho_atual - 1;
         *resultado = SUCESSO;
         return Dado;
@@ -288,6 +290,7 @@ void * RemoverPos(struct Lista * lista, int Pos, int * resultado)
         for (i=0; i<Pos; i++){
             if (no_atual->prox != 0){
                 no_atual = no_atual->prox;  //Desloca um no na lista
+                saltos_remove++; //MARCOS
             } else { // Se a posicao desejada e maior que numero de elementos na lista
                 *resultado = FRACASSO;
                 return NULL;
