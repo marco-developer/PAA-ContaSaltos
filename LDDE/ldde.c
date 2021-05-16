@@ -97,7 +97,7 @@ int InserirPos(pldde lista, void * elemento, int posicao, int *saltos){
     atual = lista->inicio; 
     for(i = 0; i < posicao; i++){
         atual = atual->prox;
-        *saltos = *saltos + 1;
+        *saltos = *saltos + 1; // MAM
     }
 
     /* Caso o valor do n� seja nulo, ent�o a inser��o deve ser no final ou n�o h� elementos na lista */
@@ -110,7 +110,7 @@ int InserirPos(pldde lista, void * elemento, int posicao, int *saltos){
             lista->fim->prox = novo_no;
             lista->fim = novo_no;
         }
-        *saltos = *saltos + 1;
+        *saltos = *saltos + 1; // MAM
         lista->quantidade_nos++;
 
         return SUCESSO;
@@ -185,7 +185,7 @@ int RemoverPos(pldde lista, int posicao, int *saltos){
     atual = lista->inicio; 
     for(i = 0; i < posicao; i++){
         atual = atual->prox;
-        *saltos = *saltos + 1;
+        *saltos = *saltos + 1; // MAM
     }
 
     /* Atualiza os ponteiros de acordo com o caso espec�fico (in�cio, fim ou meio) */

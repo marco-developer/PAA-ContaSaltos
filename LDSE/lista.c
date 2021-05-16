@@ -59,11 +59,11 @@ void inserirInicio(pLista lista, void *elemento, void *valorInserido, int *resul
 
         lista->qtdeNos++;
         *resultado = SUCESSO;
-        *saltos = *saltos + 1;
+        *saltos = *saltos + 1; // MAM
 
         //retorna no parâmetro valor inserido
         memcpy(valorInserido, no->dados, lista->tamanho_dados);
-        // printf("Elemento inserido no inicio da fila!\n");
+        // printf("Elemento inserido no inicio da fila!\n"); 
         // printf("Parcial de saltos apos insercao: %d\n", *saltos);
     }
 }
@@ -90,11 +90,11 @@ void inserirFim(pLista lista, void *elemento, void *valorInserido, int *resultad
             noUlt = lista->inicio;
             
             //busca pelo ultimo elemento
-            if (noUlt->prox == NULL) *saltos = *saltos + 1;
+            if (noUlt->prox == NULL) *saltos = *saltos + 1; // MAM
             while (noUlt->prox != NULL)
             {
                 noUlt = noUlt->prox;
-                *saltos = *saltos + 1;
+                *saltos = *saltos + 1; // MAM
                 // printf("Salto nro: %d\n", *saltos);
             }
 
@@ -152,10 +152,10 @@ void inserirPos(pLista lista, void *elemento, void *valorInserido, int pos, int 
                         // printf("cont: %d\n", cont);
                         noAux = noAux->prox;
                         cont++;
-                        *saltos = *saltos + 1;
+                        *saltos = *saltos + 1; // MAM
                         // printf("Salto %d\n", cont);
                     }
-                    *saltos = *saltos + 1;
+                    *saltos = *saltos + 1; // MAM
                     // ao inserir na posicao desejada todos os elementos posteriores são empurrados para trás.
 
                     noAnt = noAux->prox; // pega o valor que estava na atual posicao
@@ -197,7 +197,7 @@ void removerInicio(pLista lista, void *valorRemovido, int *resultado, int *salto
         lista->qtdeNos--;
         *resultado = SUCESSO;
         printf("\nElemento do inicio da fila removido!\n");
-        *saltos = *saltos + 1;
+        *saltos = *saltos + 1; // MAM
         // printf("Parcial de saltos: %d\n", *saltos);
     }
 }
@@ -221,7 +221,7 @@ void removerFim(pLista lista, void *valorRemovido, int *resultado, int *saltos)
         {
             lista->inicio = NULL;
             lista->qtdeNos = 0;
-            *saltos = *saltos + 1;
+            *saltos = *saltos + 1; // MAM
         }
         else
         {
@@ -229,7 +229,7 @@ void removerFim(pLista lista, void *valorRemovido, int *resultado, int *saltos)
             for (; noAux->prox != NULL; noAux = noAux->prox){
                 noAnt = noAux;
                 cont++;
-                *saltos = *saltos + 1;
+                *saltos = *saltos + 1; // MAM
             }
             noAnt->prox = NULL; // apaga o ponteiro para o ultimo elemento
         }
@@ -401,7 +401,7 @@ void *buscarNo(pLista lista, int pos, int *saltos)
         {
             noAux = noAux->prox;
             cont++;
-            *saltos = *saltos + 1;
+            *saltos = *saltos + 1; // MAM
         }
         
         return noAux;

@@ -21,7 +21,6 @@ int main (void) {
     
     printf("\nRemovendo elementos...\n");
     for(int i=2999;i>=0;i--) {
-        // valorBuscado = buscarPos(lista, i, &resultado);
         printf("Removendo elemento armazenado na posicao %d. \n", i);
         removerPos(lista, valorRemovido, i, &resultado, &saltosRem);
     }
